@@ -392,6 +392,23 @@
   .body-text b { color: var(--ink); font-weight: 700; }
   .rule { height: 1px; background: var(--hair-soft); margin: 2rem 0; }
 
+  figure.shot { margin: 1.4rem 0 0; max-width: 46rem; }
+  figure.shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--hair);
+    border-radius: 10px;
+    background: #FFFFFF;
+  }
+  figure.shot figcaption {
+    font-family: var(--mono);
+    font-size: var(--step--2);
+    line-height: 1.6;
+    color: var(--ink-3);
+    margin-top: .7rem;
+  }
+
   .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(12.5rem,1fr)); gap: 1.4rem; }
   .cols > div { background: var(--fill); border-radius: 10px; padding: 1.1rem 1.2rem 1.25rem; }
   .cols h5 {
@@ -696,6 +713,12 @@
 
         <p class="sect-label">A tool I built because I kept asking the same question</p>
         <p class="body-text">Six months of unfamiliar command&#8209;line work meant I kept meeting shell commands I half&#8209;recognised, looking them up, and meeting them again a fortnight later having forgotten. So I built a glossary that removes the second half of that loop: it hooks into my editor, captures every command that&rsquo;s new to me the moment it runs, and fills in a plain&#8209;language explanation in the background. The notebook builds itself while I work instead of being one more thing to maintain. It has gone through five rounds of its own since &mdash; installer to editor plugin &mdash; and it&rsquo;s the only code here I own; everything else lives in private repositories.</p>
+
+        <figure class="shot">
+          <img src="glossary.png" width="1960" height="2054" loading="lazy" decoding="async"
+               alt="The glossary panel: a search box, commands grouped by category, and an expanded entry showing a plain-language explanation, what the command has been used for, variants seen and the date it was first run. One entry carries a caution badge and a warning that the pattern matches on a substring.">
+          <figcaption>The viewer, running on sample data rather than my own glossary &mdash; the real one is full of internal paths. The caution badge is the part that matters: the tool exists because I was approving commands I didn&rsquo;t fully understand.</figcaption>
+        </figure>
 
         <div class="rule"></div>
 
