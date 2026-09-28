@@ -1,0 +1,834 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Miguel Mesa</title></head><body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    /* neutrals */
+    --paper:      #F4F5F8;
+    --panel:      #FFFFFF;
+    --fill:       #EDEFF3;
+    --ink:        #12141A;
+    --ink-2:      #3A3F49;
+    --ink-3:      #6E747F;
+    --hair:       #DCDFE6;
+    --hair-soft:  #E8EAEF;
+    --shadow:     0 1px 2px rgba(18,20,26,.04), 0 10px 28px -18px rgba(18,20,26,.28);
+    --link:       #2a78d6;
+
+    /* stage hues — validated categorical order, light steps */
+    --s1: #2a78d6;  /* blue    */
+    --s2: #eb6834;  /* orange  */
+    --s3: #1baf7a;  /* aqua    */
+    --s4: #eda100;  /* yellow  */
+    --s5: #e87ba4;  /* magenta */
+    --s6: #008300;  /* green   */
+    --s7: #4a3aa7;  /* violet  */
+    --s8: #e34948;  /* red     */
+
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --sans: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --step--2: 0.688rem;
+    --step--1: clamp(0.75rem, 0.73rem + 0.1vw, 0.8rem);
+    --step-0:  clamp(0.99rem, 0.96rem + 0.15vw, 1.06rem);
+    --step-1:  clamp(1.12rem, 1.05rem + 0.3vw, 1.32rem);
+    --step-2:  clamp(1.4rem, 1.24rem + 0.74vw, 1.9rem);
+    --step-3:  clamp(1.85rem, 1.5rem + 1.4vw, 2.7rem);
+    --step-4:  clamp(2.5rem, 1.5rem + 4.6vw, 5.6rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1116;
+      --panel:      #191C23;
+      --fill:       #21252E;
+      --ink:        #F0F1F4;
+      --ink-2:      #BEC2CB;
+      --ink-3:      #858B96;
+      --hair:       #2D323C;
+      --hair-soft:  #242932;
+      --shadow:     0 1px 2px rgba(0,0,0,.4), 0 12px 32px -20px rgba(0,0,0,.9);
+      --link:       #3987e5;
+
+      --s1: #3987e5;
+      --s2: #d95926;
+      --s3: #199e70;
+      --s4: #c98500;
+      --s5: #d55181;
+      --s6: #008300;
+      --s7: #9085e9;
+      --s8: #e66767;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #0F1116;
+    --panel:      #191C23;
+    --fill:       #21252E;
+    --ink:        #F0F1F4;
+    --ink-2:      #BEC2CB;
+    --ink-3:      #858B96;
+    --hair:       #2D323C;
+    --hair-soft:  #242932;
+    --shadow:     0 1px 2px rgba(0,0,0,.4), 0 12px 32px -20px rgba(0,0,0,.9);
+    --link:       #3987e5;
+
+    --s1: #3987e5;
+    --s2: #d95926;
+    --s3: #199e70;
+    --s4: #c98500;
+    --s5: #d55181;
+    --s6: #008300;
+    --s7: #9085e9;
+    --s8: #e66767;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
+
+  p { margin: 0 0 0.9rem; }
+  p:last-child { margin-bottom: 0; }
+  em { font-style: italic; }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  h4, h5 { margin: 0; }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--ink-3);
+    margin: 0;
+  }
+
+  :is(a, button, [tabindex]):focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ============ HERO ============ */
+  .hero { padding: 4.5rem 0 0; }
+  .hero h1 {
+    font-size: var(--step-4);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    margin: 0.8rem 0 1.5rem;
+  }
+  .hero .thesis {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: var(--step-2);
+    line-height: 1.24;
+    letter-spacing: -0.025em;
+    max-width: 25ch;
+    margin: 0 0 2.5rem;
+  }
+  .hero .thesis span { display: block; color: var(--ink-2); }
+
+  /* spectrum strip — previews the stage colors and doubles as a rule */
+  .spectrum { display: flex; gap: 3px; margin: 0 0 2.25rem; max-width: 26rem; }
+  .spectrum i { height: 6px; flex: 1; border-radius: 3px; }
+
+  .spec {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 1px;
+    background: var(--hair);
+    border: 1px solid var(--hair);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 0 1rem;
+  }
+  .spec div { background: var(--panel); padding: 0.95rem 1.1rem 1.05rem; }
+  .spec dt {
+    font-family: var(--mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--ink-3);
+    margin-bottom: 0.4rem;
+  }
+  .spec dd { margin: 0; font-weight: 600; font-size: var(--step--1); color: var(--ink); line-height: 1.45; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero > * { animation: rise .6s cubic-bezier(.25,.8,.3,1) backwards; }
+    .hero > :nth-child(1) { animation-delay: .04s; }
+    .hero > :nth-child(2) { animation-delay: .1s; }
+    .hero > :nth-child(3) { animation-delay: .17s; }
+    .hero > :nth-child(4) { animation-delay: .24s; }
+    .hero > :nth-child(5) { animation-delay: .31s; }
+    @keyframes rise { from { opacity:0; transform: translateY(.6rem);} to { opacity:1; transform:none;} }
+  }
+
+  /* ============ NAV ============ */
+  .explorer { padding: 3.5rem 0 5rem; }
+  .explorer-head { margin-bottom: 2rem; }
+  .explorer-head h2 { font-size: var(--step-2); margin-bottom: .5rem; }
+  .explorer-head p { color: var(--ink-2); font-size: var(--step--1); margin: 0; max-width: 52ch; }
+
+  .rail-scroll { overflow-x: auto; overflow-y: hidden; margin: 0 -1.5rem; padding: 0 1.5rem .75rem; }
+  .rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(8rem, 1fr);
+    position: relative;
+    min-width: 46rem;
+    padding-top: 1.75rem;
+  }
+  .rail::before {
+    content: "";
+    position: absolute;
+    top: 1.75rem; left: 6.25%; right: 6.25%;
+    height: 2px; border-radius: 2px;
+    background: var(--hair);
+  }
+  .rail .flow {
+    position: absolute;
+    top: 1.75rem; left: 6.25%;
+    height: 2px; border-radius: 2px;
+    background: var(--flow-color, var(--s1));
+    width: 0;
+    transition: width .45s cubic-bezier(.4,.1,.2,1), background-color .3s;
+  }
+  @media (prefers-reduced-motion: reduce) { .rail .flow { transition: none; } }
+
+  .stop {
+    appearance: none; background: none; border: 0;
+    padding: 0 .4rem; margin: 0; cursor: pointer;
+    color: var(--ink-3);
+    font-family: var(--mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center;
+    gap: .85rem;
+    position: relative; top: -1.75rem;
+  }
+  .stop .node {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 3px solid var(--hair);
+    transition: border-color .22s, transform .22s, box-shadow .22s;
+    flex: none;
+  }
+  .stop .label { display: block; max-width: 7.5rem; line-height: 1.4; }
+  .stop:hover { color: var(--ink); }
+  .stop:hover .node { border-color: var(--stage); transform: scale(1.15); }
+  .stop[aria-selected="true"] { color: var(--ink); }
+  .stop[aria-selected="true"] .node {
+    background: var(--stage);
+    border-color: var(--stage);
+    transform: scale(1.3);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--stage) 22%, transparent);
+  }
+
+  /* ============ PANEL ============ */
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--hair);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-top: 2rem;
+    min-height: 26rem;
+  }
+  .panel .bar { height: 5px; background: var(--stage); }
+  .panel-head {
+    padding: 1.7rem 2rem 1.5rem;
+    background: var(--fill);
+    background: color-mix(in srgb, var(--stage) 7%, var(--panel));
+    border-bottom: 1px solid var(--hair);
+  }
+  .panel-body { padding: 1.9rem 2rem 2.2rem; }
+  @media (max-width: 44rem) {
+    .panel-head { padding: 1.3rem 1.2rem 1.15rem; }
+    .panel-body { padding: 1.5rem 1.2rem 1.7rem; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .panel[data-anim="in"] { animation: panelIn .3s cubic-bezier(.25,.8,.3,1); }
+    @keyframes panelIn { from { opacity:0; transform: translateY(.35rem);} to { opacity:1; transform:none;} }
+  }
+
+  .panel-head .idx {
+    font-family: var(--mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--ink-3);
+    margin: 0 0 .5rem;
+    display: flex; align-items: center; gap: .55rem;
+  }
+  .panel-head .idx::before {
+    content: "";
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--stage);
+    flex: none;
+  }
+  .panel-head h3 { font-size: var(--step-2); max-width: 25ch; margin-bottom: .75rem; }
+  .panel-head .what { color: var(--ink-2); max-width: 66ch; margin: 0; }
+  .stack { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.1rem; }
+  .stack b {
+    font-family: var(--mono);
+    font-size: var(--step--2);
+    font-weight: 400;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    background: var(--panel);
+    border: 1px solid var(--hair);
+    border-radius: 999px;
+    padding: .3rem .7rem;
+  }
+
+  .sect-label {
+    font-family: var(--mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--ink-3);
+    margin: 0 0 .8rem;
+  }
+  .panel h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: var(--step-1);
+    letter-spacing: -0.025em;
+    line-height: 1.26;
+    max-width: 34ch;
+    margin-bottom: 1.3rem;
+  }
+
+  .beats { margin: 0; }
+  .beat {
+    display: grid;
+    grid-template-columns: 11rem minmax(0,1fr);
+    gap: 0 1.75rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--hair-soft);
+  }
+  .beat dt {
+    font-family: var(--mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    padding-top: .3rem;
+  }
+  .beat dd { margin: 0; max-width: 66ch; color: var(--ink-2); }
+  .beat.takeaway {
+    background: color-mix(in srgb, var(--stage) 8%, transparent);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+    margin-top: .75rem;
+    border-top: 0;
+    grid-template-columns: 9.5rem minmax(0,1fr);
+  }
+  .beat.takeaway dd { color: var(--ink); }
+  .beat.takeaway dd b { font-weight: 700; }
+  @media (max-width: 44rem) {
+    .beat, .beat.takeaway { grid-template-columns: minmax(0,1fr); gap: .3rem 0; }
+  }
+
+  .notes { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .85rem; }
+  .notes li {
+    padding: 1rem 1.2rem;
+    background: var(--fill);
+    border-radius: 10px;
+    border-left: 4px solid var(--stage);
+    max-width: 70ch;
+    color: var(--ink-2);
+  }
+  .notes b { color: var(--ink); font-weight: 700; }
+
+  .callout {
+    background: color-mix(in srgb, var(--stage) 10%, transparent);
+    border-radius: 10px;
+    padding: 1.15rem 1.3rem;
+    margin: 1.4rem 0;
+    max-width: 58ch;
+  }
+  .callout p {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .body-text { color: var(--ink-2); max-width: 68ch; }
+  .body-text b { color: var(--ink); font-weight: 700; }
+  .rule { height: 1px; background: var(--hair-soft); margin: 2rem 0; }
+
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(12.5rem,1fr)); gap: 1.4rem; }
+  .cols > div { background: var(--fill); border-radius: 10px; padding: 1.1rem 1.2rem 1.25rem; }
+  .cols h5 {
+    font-family: var(--mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--ink-3);
+    margin: 0 0 .75rem;
+  }
+  .cols ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .42rem; }
+  .cols li { font-size: var(--step--1); color: var(--ink); }
+  .cols li span { color: var(--ink-3); }
+
+  /* ============ OUTRO ============ */
+  .outro { border-top: 1px solid var(--hair); padding: 3.5rem 0 4.5rem; }
+  .outro h2 { font-size: var(--step-3); margin-bottom: 1.1rem; max-width: 22ch; }
+  .outro p { color: var(--ink-2); max-width: 60ch; }
+  .contact { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.75rem; }
+  .contact a {
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    padding: .7rem 1.15rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--link);
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 500;
+    transition: filter .18s, transform .18s;
+  }
+  .contact a:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .fineprint {
+    font-family: var(--mono);
+    font-size: var(--step--2);
+    color: var(--ink-3);
+    line-height: 1.7;
+    max-width: 68ch;
+    margin-top: 2.75rem;
+  }
+
+  /* printing reveals every stage — the page becomes a full document */
+  @media print {
+    @page { size: A4; margin: 14mm 12mm; }
+    :root {
+      --paper: #FFFFFF; --panel: #FFFFFF; --fill: #F1F2F4;
+      --ink: #000000; --ink-2: #2E333A; --ink-3: #585E66;
+      --hair: #BFC3CA; --hair-soft: #D8DBE1; --shadow: none;
+    }
+    body { background: #FFFFFF; font-size: 10.5pt; line-height: 1.5; }
+    .wrap { max-width: none; padding: 0; }
+    .hero { padding: 0 0 1rem; }
+    .hero > * { animation: none !important; }
+    .rail-scroll, .explorer-head { display: none; }
+    .explorer { padding: 0; }
+    .panel[hidden] { display: block !important; }
+    .panel {
+      break-before: page;
+      break-inside: auto;
+      box-shadow: none;
+      border-radius: 0;
+      min-height: 0;
+      margin-top: 0;
+    }
+    .panel:first-of-type { break-before: auto; }
+    .panel-head, .panel-body { padding: 1rem 0 1.2rem; }
+    .panel-head { border-bottom: 1px solid var(--hair); }
+    .beat, .notes li, .cols > div, .callout { break-inside: avoid; }
+    .outro { break-before: page; padding: 1.5rem 0 0; }
+    .contact a { background: none; color: var(--ink); border: 1px solid var(--hair); }
+    a { text-decoration: none; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="tag">Portfolio &middot; first professional role</p>
+    <h1>Miguel Mesa</h1>
+    <p class="thesis">Six months on a sustainability&#8209;data platform. <span>Five stacks, one pipeline.</span></p>
+    <div class="spectrum" aria-hidden="true">
+      <i style="background:var(--s1)"></i><i style="background:var(--s2)"></i><i style="background:var(--s3)"></i><i style="background:var(--s4)"></i><i style="background:var(--s5)"></i><i style="background:var(--s6)"></i><i style="background:var(--s7)"></i><i style="background:var(--s8)"></i>
+    </div>
+    <dl class="spec">
+      <div><dt>Role</dt><dd>Junior software engineer</dd></div>
+      <div><dt>Period</dt><dd>April &ndash; September 2026, completed</dd></div>
+      <div><dt>Employer</dt><dd>Clarity AI</dd></div>
+      <div><dt>Scope</dt><dd>7 codebases, 5 stacks</dd></div>
+      <div><dt>Location</dt><dd>Madrid, Spain</dd></div>
+    </dl>
+  </header>
+
+  <main class="explorer">
+    <div class="explorer-head">
+      <h2>Pick a stage</h2>
+      <p>I worked at every point of the path data takes through the product. Each stop is a codebase, and the problem there I&rsquo;d most want to be asked about.</p>
+    </div>
+
+    <div class="rail-scroll">
+      <div class="rail" role="tablist" aria-label="Pipeline stages">
+        <div class="flow" id="flow"></div>
+        <button class="stop" role="tab" id="tab-orchestration" aria-controls="p-orchestration" aria-selected="true" style="--stage:var(--s1)">
+          <span class="node"></span><span class="label">01 Orchestration</span>
+        </button>
+        <button class="stop" role="tab" id="tab-modelling" aria-controls="p-modelling" aria-selected="false" tabindex="-1" style="--stage:var(--s2)">
+          <span class="node"></span><span class="label">02 Modelling</span>
+        </button>
+        <button class="stop" role="tab" id="tab-validation" aria-controls="p-validation" aria-selected="false" tabindex="-1" style="--stage:var(--s3)">
+          <span class="node"></span><span class="label">03 Validation</span>
+        </button>
+        <button class="stop" role="tab" id="tab-api" aria-controls="p-api" aria-selected="false" tabindex="-1" style="--stage:var(--s4)">
+          <span class="node"></span><span class="label">04 API</span>
+        </button>
+        <button class="stop" role="tab" id="tab-interface" aria-controls="p-interface" aria-selected="false" tabindex="-1" style="--stage:var(--s5)">
+          <span class="node"></span><span class="label">05 Interface</span>
+        </button>
+        <button class="stop" role="tab" id="tab-reports" aria-controls="p-reports" aria-selected="false" tabindex="-1" style="--stage:var(--s6)">
+          <span class="node"></span><span class="label">06 Reports</span>
+        </button>
+        <button class="stop" role="tab" id="tab-tests" aria-controls="p-tests" aria-selected="false" tabindex="-1" style="--stage:var(--s7)">
+          <span class="node"></span><span class="label">Tests</span>
+        </button>
+        <button class="stop" role="tab" id="tab-method" aria-controls="p-method" aria-selected="false" tabindex="-1" style="--stage:var(--s8)">
+          <span class="node"></span><span class="label">How I work</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= 01 ORCHESTRATION ================= -->
+    <section class="panel" role="tabpanel" id="p-orchestration" aria-labelledby="tab-orchestration" tabindex="0" style="--stage:var(--s1)">
+      <div class="bar"></div>
+      <div class="panel-head">
+        <p class="idx">Stage 01 &middot; Orchestration</p>
+        <h3>The data&#8209;pipeline platform</h3>
+        <p class="what">Scheduled workflows that build, validate and publish the datasets everything downstream depends on. This is where most of my six months went: retry and failure behaviour, task&#8209;level reliability, and release runs. Almost half of everything I shipped landed here.</p>
+        <div class="stack"><b>Python</b><b>Apache Airflow</b><b>Snowflake</b></div>
+      </div>
+      <div class="panel-body">
+        <p class="sect-label">The problem I&rsquo;d pick</p>
+        <h4>Seventeen modules that all failed the same way</h4>
+        <dl class="beats">
+          <div class="beat"><dt>The symptom</dt><dd>Scheduled workflows died on transient errors. A warehouse timeout or a dropped connection would take down a whole run, and someone would re&#8209;trigger it by hand the next morning. It wasn&rsquo;t one bug &mdash; it was the same missing behaviour repeated everywhere.</dd></div>
+          <div class="beat"><dt>What was going on</dt><dd>Retry policy was set per task by whoever wrote each task, so coverage was accidental rather than designed. I audited it across seventeen modules, which meant reading a lot of code I hadn&rsquo;t written and working out which steps were safe to run twice.</dd></div>
+          <div class="beat"><dt>What I did</dt><dd>Scoped the project myself, split it into per&#8209;module subtasks and worked through them as a series of small reviewable changes. Added retry policies where reruns were safe &mdash; and in one case <em>removed</em> a default retry, because re&#8209;running that step could register the same schema twice. Blanket retries would have been the easy answer and the wrong one.</dd></div>
+          <div class="beat takeaway"><dt>What I took from it</dt><dd><b>A retry is a claim that the operation is idempotent.</b> On a step that isn&rsquo;t, you&rsquo;ve turned a loud transient failure into quiet data corruption. Doing this seventeen times also gave me the first real map I had of how the platform fits together.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 02 MODELLING ================= -->
+    <section class="panel" role="tabpanel" id="p-modelling" aria-labelledby="tab-modelling" tabindex="0" hidden style="--stage:var(--s2)">
+      <div class="bar"></div>
+      <div class="panel-head">
+        <p class="idx">Stage 02 &middot; Modelling</p>
+        <h3>The analytics modelling layer</h3>
+        <p class="what">Transformations over warehouse data &mdash; the models that turn raw inputs into the metrics the product actually shows. Smaller in volume than the rest of my work and sharper in consequence: changing which metrics flow into a currency&#8209;conversion model, and the tests around them.</p>
+        <div class="stack"><b>SQL</b><b>dbt</b><b>Snowflake</b></div>
+      </div>
+      <div class="panel-body">
+        <p class="sect-label">What it taught me</p>
+        <h4>A query that returns nothing looks exactly like a query that&rsquo;s correct</h4>
+        <dl class="beats">
+          <div class="beat"><dt>The symptom</dt><dd>I was inventorying records ahead of a decommission &mdash; work where the whole point is an accurate count &mdash; and got back a confident zero. Nothing errored. Zero is a perfectly plausible answer, so I nearly reported it.</dd></div>
+          <div class="beat"><dt>What was going on</dt><dd>The storage layer wrote one string form of an identifier and the API handed back a different one. My filter used the form I&rsquo;d seen in the API response, so it matched nothing at all in storage. A wrong filter and an empty result set are indistinguishable from the outside.</dd></div>
+          <div class="beat"><dt>What I did</dt><dd>Recounted from the underlying data, confirmed the two forms, and now run any filter unfiltered first &mdash; if the unfiltered count is also zero, the problem is my connection or my scope; if it isn&rsquo;t, the problem is my predicate.</dd></div>
+          <div class="beat takeaway"><dt>What I took from it</dt><dd><b>An empty result is not evidence. It&rsquo;s the absence of evidence.</b> Anywhere a count feeds a decision, I now prove the query can return something before I trust it returning nothing.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 03 VALIDATION ================= -->
+    <section class="panel" role="tabpanel" id="p-validation" aria-labelledby="tab-validation" tabindex="0" hidden style="--stage:var(--s3)">
+      <div class="bar"></div>
+      <div class="panel-head">
+        <p class="idx">Stage 03 &middot; Validation</p>
+        <h3>The schema&#8209;validation service</h3>
+        <p class="what">Data&#8209;quality scans that sit in the publish path and decide whether a dataset is fit to go out. Two jobs here: making the scans survive a third&#8209;party outage instead of failing the whole run, and fixing a validation job that failed every night.</p>
+        <div class="stack"><b>Python</b><b>Data&#8209;quality scanning</b><b>Apache Airflow</b></div>
+      </div>
+      <div class="panel-body">
+        <p class="sect-label">The problem I&rsquo;d pick</p>
+        <h4>The job that only failed when nobody was watching</h4>
+        <dl class="beats">
+          <div class="beat"><dt>The symptom</dt><dd>A validation job failed every single night and passed every single time we ran it by hand. The worst possible shape: not reproducible, and therefore very easy to keep re&#8209;triggering instead of fixing.</dd></div>
+          <div class="beat"><dt>What was going on</dt><dd>The nightly run resolved a dataset version that only contained the subset an upstream promotion step had copied into it; anything outside that subset resolved to nothing. Running by hand picked up a different, complete version &mdash; which is exactly why it passed. The manual run wasn&rsquo;t reproducing the failure, it was avoiding it. Worse, the render step aborted on the first missing item, so one gap hid every gap behind it.</dd></div>
+          <div class="beat"><dt>What I did</dt><dd>Gated the trigger so the job only fires once the data it depends on is genuinely present, instead of firing on a schedule and hoping. Filed the abort&#8209;on&#8209;first&#8209;miss behaviour as its own issue &mdash; collecting all the gaps in one pass is a different change and shouldn&rsquo;t ride along on this one.</dd></div>
+          <div class="beat takeaway"><dt>What I took from it</dt><dd><b>&ldquo;It works when I run it&rdquo; is information about your run, not about the job.</b> When manual and scheduled behaviour disagree, the difference between the two environments <em>is</em> the bug. That reframing is the most portable thing I learned all summer.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 04 API ================= -->
+    <section class="panel" role="tabpanel" id="p-api" aria-labelledby="tab-api" tabindex="0" hidden style="--stage:var(--s4)">
+      <div class="bar"></div>
+      <div class="panel-head">
+        <p class="idx">Stage 04 &middot; API</p>
+        <h3>The portfolio&#8209;management backend</h3>
+        <p class="what">The service behind portfolio editing. My work here was about behaviour at the edges rather than new features: what happens under load, on oversized input, and what the caller is told when something goes wrong. I ended up chasing two separate out&#8209;of&#8209;memory failures here, which is how I learned to read them.</p>
+        <div class="stack"><b>Backend services</b><b>HTTP APIs</b></div>
+      </div>
+      <div class="panel-body">
+        <p class="sect-label">The problem I&rsquo;d pick</p>
+        <h4>A 500 that should have been a 413</h4>
+        <dl class="beats">
+          <div class="beat"><dt>The symptom</dt><dd>Editing a very large portfolio took the service down with an out&#8209;of&#8209;memory kill. Users got a generic <em>500 Internal Server Error</em>, which tells them nothing they can act on. The on&#8209;call rota got a crashed service, which tells them something is badly broken.</dd></div>
+          <div class="beat"><dt>What was going on</dt><dd>The request was fully buffered and parsed before anything checked its size. Past a threshold the process ran out of memory &mdash; and OOM kills don&rsquo;t announce themselves as OOM kills, so the logs read like an unexplained death rather than a size problem.</dd></div>
+          <div class="beat"><dt>What I did</dt><dd>Traced the crash back to payload size, then added a guard that rejects oversized edits with <em>413 Payload Too Large</em> before the body is buffered. About a hundred lines with tests &mdash; a small change that took most of its time in the diagnosis.</dd></div>
+          <div class="beat takeaway"><dt>What I took from it</dt><dd><b>Status codes are part of the product, not plumbing.</b> A 500 says &ldquo;we broke&rdquo;; a 413 says &ldquo;this input is too big, send less&rdquo; &mdash; the second a user can act on and the on&#8209;call can safely ignore. Choosing the right failure is design work.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 05 INTERFACE ================= -->
+    <section class="panel" role="tabpanel" id="p-interface" aria-labelledby="tab-interface" tabindex="0" hidden style="--stage:var(--s5)">
+      <div class="bar"></div>
+      <div class="panel-head">
+        <p class="idx">Stage 05 &middot; Interface</p>
+        <h3>The customer&#8209;facing web application</h3>
+        <p class="what">Where the whole pipeline finally becomes something a person looks at. Reporting screens, a metric screener, report&#8209;centre navigation, and internationalisation &mdash; including a rewrite where a reviewer talked me out of my first instinct, which I&rsquo;m still grateful for.</p>
+        <div class="stack"><b>Vue</b><b>JavaScript</b><b>vue&#8209;i18n</b><b>Cypress</b></div>
+      </div>
+      <div class="panel-body">
+        <p class="sect-label">The problem I&rsquo;d pick</p>
+        <h4>Translations that were never missing</h4>
+        <dl class="beats">
+          <div class="beat"><dt>The symptom</dt><dd>A metric screen rendered raw translation keys instead of labels. The obvious diagnosis, and the one the console appeared to support, was a missing set of translations.</dd></div>
+          <div class="beat"><dt>What was going on</dt><dd>Two layers down. Those labels lived under a different translation namespace than the one being looked up, and that namespace had never been registered with the dynamic&#8209;prefix resolver. So the resolver threw its own &ldquo;prefix not defined&rdquo; error <em>before</em> the i18n library ever got as far as reporting a missing key. The first error was masking the real one &mdash; and the real one wasn&rsquo;t a missing translation at all.</dd></div>
+          <div class="beat"><dt>What I did</dt><dd>Registered the namespace and resolved the lookup against where the strings actually live. The fix involves a trade&#8209;off that looks wrong out of context, so I left a comment at the site explaining why &mdash; specifically so the next person doesn&rsquo;t &ldquo;fix&rdquo; it back.</dd></div>
+          <div class="beat takeaway"><dt>What I took from it</dt><dd><b>The first error message isn&rsquo;t always the first error.</b> When one layer fails early it hides the layer you needed to see. And a surprising decision without a comment beside it has a very short life.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 06 REPORTS ================= -->
+    <section class="panel" role="tabpanel" id="p-reports" aria-labelledby="tab-reports" tabindex="0" hidden style="--stage:var(--s6)">
+      <div class="bar"></div>
+      <div class="panel-head">
+        <p class="idx">Stage 06 &middot; Reports</p>
+        <h3>The report&#8209;template service</h3>
+        <p class="what">Regulatory reports generated as documents, localised per country. I did a full pass over one country&rsquo;s variant of an EU Taxonomy report template &mdash; less algorithmically interesting than the rest of the pipeline, and the place I learned most about the domain itself.</p>
+        <div class="stack"><b>Templating</b><b>Document generation</b><b>Localisation</b></div>
+      </div>
+      <div class="panel-body">
+        <p class="sect-label">What it taught me</p>
+        <h4>The domain is the specification</h4>
+        <dl class="beats">
+          <div class="beat"><dt>The situation</dt><dd>Regulatory reporting templates aren&rsquo;t a design choice &mdash; the layout, the fields and the wording are set by a regulation, and getting one wrong isn&rsquo;t a cosmetic bug. I couldn&rsquo;t reason my way to the right answer from the code alone.</dd></div>
+          <div class="beat"><dt>What I did</dt><dd>Stopped trying to infer intent from the existing templates and went to the people who knew the regulation. Most of the work turned out to be asking precise questions and then encoding the answers faithfully.</dd></div>
+          <div class="beat takeaway"><dt>What I took from it</dt><dd><b>In a regulated domain, &ldquo;what does the code do&rdquo; is the wrong first question.</b> Some requirements can&rsquo;t be derived, only looked up &mdash; and knowing which kind you&rsquo;re facing saves a day of clever guessing.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= TESTS ================= -->
+    <section class="panel" role="tabpanel" id="p-tests" aria-labelledby="tab-tests" tabindex="0" hidden style="--stage:var(--s7)">
+      <div class="bar"></div>
+      <div class="panel-head">
+        <p class="idx">Spans the pipeline &middot; Tests</p>
+        <h3>The end&#8209;to&#8209;end suite</h3>
+        <p class="what">The tests that run against the whole path rather than any one stage. I hardened a smoke test that was paging the on&#8209;call rota for reasons that turned out not to be outages &mdash; and spent enough time staring at red builds to form opinions about them.</p>
+        <div class="stack"><b>Cypress</b><b>CI pipelines</b></div>
+      </div>
+      <div class="panel-body">
+        <p class="sect-label">Three things that cost me time once each</p>
+        <ul class="notes">
+          <li><b>A suite that goes green on retry has stopped being a suite.</b> The frontend CI failed on things unrelated to my change often enough that re&#8209;running became reflex &mdash; and reflex re&#8209;running is exactly how a real failure gets waved through. I started saying &ldquo;known flaky&rdquo; or &ldquo;I don&rsquo;t know why this failed&rdquo; out loud in the merge request instead of quietly hitting retry.</li>
+          <li><b>A degraded staging environment doesn&rsquo;t slow verification down, it invalidates it.</b> If I can&rsquo;t tell &ldquo;my change is broken&rdquo; from &ldquo;the environment is unwell&rdquo;, I haven&rsquo;t verified anything &mdash; and saying so is more useful than shipping on a shrug.</li>
+          <li><b>A test that wakes someone at 3am should be worth waking them for.</b> An alert that fires on something recoverable trains people to ignore alerts, which costs you the one that matters. Tightening what the smoke test actually asserts was worth more than making it pass.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= METHOD ================= -->
+    <section class="panel" role="tabpanel" id="p-method" aria-labelledby="tab-method" tabindex="0" hidden style="--stage:var(--s8)">
+      <div class="bar"></div>
+      <div class="panel-head">
+        <p class="idx">Off&#8209;pipeline &middot; How I work</p>
+        <h3>Review, AI, and a tool I built for myself</h3>
+        <p class="what">The parts that aren&rsquo;t attached to any one codebase: how I found work, what review taught me, how I use AI tooling, and the one piece of software here that&rsquo;s mine.</p>
+      </div>
+      <div class="panel-body">
+        <p class="sect-label">Finding my own work</p>
+        <p class="body-text"><b>More than a third of the tasks I closed were ones I found and filed myself</b> &mdash; a bug noticed while working on something adjacent, a piece of reliability nobody had asked for yet. I started the six months receiving work already broken into pieces and ended it breaking the pieces out myself, including the seventeen&#8209;module reliability project, which I scoped and split into subtasks before writing any of it. I finished with nothing left open on the board.</p>
+
+        <div class="rule"></div>
+
+        <p class="sect-label">Code review</p>
+        <p class="body-text">Over sixty merge requests went through review, and the feedback changed how I work more than any single bug did. The most useful recurring note was structural: my instinct on a rewrite was to branch inside the existing component and let old and new behaviour share one template. A reviewer pushed back &mdash; pull the new implementation into its own component instead. The reason stuck: the cost of mixing two implementations isn&rsquo;t paid by me while I write it, it&rsquo;s paid by whoever opens the file next and has to work out which half is live.</p>
+        <div class="callout">
+          <p>And the unflattering one: in July I opened six merge requests in a single day, then four more shortly after, all needing the same reviewer.</p>
+        </div>
+        <p class="body-text">Median time&#8209;to&#8209;merge went from about an hour in June to more than twenty in July, and one change sat for a week. Nothing was wrong with the code. I&rsquo;d just discovered that my own throughput isn&rsquo;t the constraint on a team &mdash; review capacity is, and I had aimed all of it at one person. I now stagger related changes and say which one to look at first.</p>
+
+        <div class="rule"></div>
+
+        <p class="sect-label">Working with AI tooling</p>
+        <p class="body-text">I use AI coding tools heavily, and I&rsquo;d rather say so plainly than have it be a surprise. The part worth knowing is <b>what I use them for</b>. Going back through my own session history, the question I asked far more than any other was some version of <em>&ldquo;here&rsquo;s a ticket &mdash; which repositories does this live in, and how would you approach it?&rdquo;</em> Not &ldquo;write this for me.&rdquo; On a platform of seven codebases where one ticket can touch three, the expensive part for someone new isn&rsquo;t writing the change, it&rsquo;s finding where it goes. That is the part I delegated.</p>
+        <p class="body-text">The rest went on tooling friction, unfamiliar concepts, and drafting the message that laid out a release decision for the team to choose from. What I did not delegate is every problem on this page: whether a retry is safe on one specific step, noticing that two environments differ, knowing that a comment needs to exist so a future colleague doesn&rsquo;t undo you. I use it for breadth and reach for it late on judgement &mdash; it&rsquo;s a fast way to produce a plausible answer, and &ldquo;plausible&rdquo; is the one thing you can&rsquo;t afford in a publish path.</p>
+
+        <div class="rule"></div>
+
+        <p class="sect-label">A tool I built because I kept asking the same question</p>
+        <p class="body-text">Six months of unfamiliar command&#8209;line work meant I kept meeting shell commands I half&#8209;recognised, looking them up, and meeting them again a fortnight later having forgotten. So I built a glossary that removes the second half of that loop: it hooks into my editor, captures every command that&rsquo;s new to me the moment it runs, and fills in a plain&#8209;language explanation in the background. The notebook builds itself while I work instead of being one more thing to maintain. It has gone through five rounds of its own since &mdash; installer to editor plugin &mdash; and it&rsquo;s the only code here I own; everything else lives in private repositories.</p>
+
+        <div class="rule"></div>
+
+        <p class="sect-label">What I can work in</p>
+        <div class="cols">
+          <div>
+            <h5>Productive now</h5>
+            <ul>
+              <li>Python <span>&mdash; pipeline tasks, services</span></li>
+              <li>Apache Airflow <span>&mdash; DAGs, retries, local runs</span></li>
+              <li>Vue <span>&mdash; components, i18n</span></li>
+              <li>Git &amp; GitLab <span>&mdash; review flow, CI</span></li>
+              <li>SQL <span>&mdash; reading and writing</span></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Would need a ramp</h5>
+            <ul>
+              <li>dbt <span>&mdash; models and tests</span></li>
+              <li>Cypress <span>&mdash; end&#8209;to&#8209;end suites</span></li>
+              <li>Snowflake <span>&mdash; querying, not admin</span></li>
+              <li>HTTP API design <span>&mdash; limits, status codes</span></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Learning next</h5>
+            <ul>
+              <li>Containers and deployment</li>
+              <li>Observability <span>&mdash; instrument before debugging</span></li>
+              <li>Idempotency patterns <span>&mdash; properly, not by incident</span></li>
+              <li>Testing strategy <span>&mdash; what to test at which layer</span></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Domain</h5>
+            <ul>
+              <li>Sustainability &amp; ESG data</li>
+              <li>EU Taxonomy reporting</li>
+              <li>Dataset release cycles</li>
+              <li>Portfolio metric aggregation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="wrap">
+  <footer class="outro">
+    <h2>What I&rsquo;m looking for</h2>
+    <p>A first full engineering role where I can go deeper rather than wider &mdash; ideally somewhere with real data volume, where reliability is a product concern and not an afterthought. Backend or data platform by preference. Happy to keep working across the stack; happier still to get properly good at one part of it.</p>
+    <div class="contact">
+      <a href="mailto:mamesaf@yahoo.es">mamesaf@yahoo.es</a>
+    </div>
+    <p class="fineprint">Final version, September 2026, written at the end of the six months. Figures come from my own issue&#8209;tracker and version&#8209;control history for April&ndash;September 2026 &mdash; counted from source on the last week, then rounded down. Employer work is described by function: no internal system, repository, product or client names, and no code &mdash; all of it lives in private repositories.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.stop'));
+  var flow = document.getElementById('flow');
+  var rail = document.querySelector('.rail');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function panelFor(tab) { return document.getElementById(tab.getAttribute('aria-controls')); }
+
+  function drawFlow(tab) {
+    if (!rail || !flow) return;
+    var railBox = rail.getBoundingClientRect();
+    var node = tab.querySelector('.node');
+    if (!node) return;
+    var nodeBox = node.getBoundingClientRect();
+    var start = railBox.width * 0.0625;
+    var end = (nodeBox.left + nodeBox.width / 2) - railBox.left;
+    flow.style.width = Math.max(0, end - start) + 'px';
+    // the flow line takes the colour of the stage you're on
+    var stage = getComputedStyle(tab).getPropertyValue('--stage');
+    if (stage) flow.style.setProperty('--flow-color', stage.trim());
+  }
+
+  function select(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      var p = panelFor(t);
+      if (!p) return;
+      p.hidden = !on;
+      if (on && !reduce) {
+        p.removeAttribute('data-anim');
+        void p.offsetWidth;
+        p.setAttribute('data-anim', 'in');
+      }
+    });
+    drawFlow(tab);
+    if (focus) tab.focus();
+    var id = tab.id.replace(/^tab-/, '');
+    if (history.replaceState) history.replaceState(null, '', '#' + id);
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { select(tab, false); });
+    tab.addEventListener('keydown', function (e) {
+      var i = tabs.indexOf(tab), next = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = tabs[(i + 1) % tabs.length];
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = tabs[(i - 1 + tabs.length) % tabs.length];
+      else if (e.key === 'Home') next = tabs[0];
+      else if (e.key === 'End') next = tabs[tabs.length - 1];
+      if (next) { e.preventDefault(); select(next, true); }
+    });
+  });
+
+  var initial = tabs[0];
+  var hash = (location.hash || '').replace(/^#/, '');
+  if (hash) {
+    var match = document.getElementById('tab-' + hash);
+    if (match) initial = match;
+  }
+  select(initial, false);
+
+  window.addEventListener('resize', function () {
+    var current = document.querySelector('.stop[aria-selected="true"]');
+    if (current) drawFlow(current);
+  });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      var current = document.querySelector('.stop[aria-selected="true"]');
+      if (current) drawFlow(current);
+    });
+  }
+})();
+</script>
+
+</body></html>
